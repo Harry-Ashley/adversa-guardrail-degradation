@@ -14,7 +14,7 @@
 
 - **Engineered a scalable synthetic data pipeline** that generated 11,916 single-turn adversarial examples using GPT-4o-mini, plus a 1,390-line multi-turn trajectory generator with Markov-chain strategy transitions and 7 action types
 
-- **Ran a controlled cross-model comparison** of GPT-3.5-turbo vs GPT-5.2 using the same attacker, same objectives, and same Claude Opus 4.5 judge with a 5-point compliance rubric, producing guardrail degradation curves that show how defense strength evolves over adversarial rounds
+- **Ran a controlled cross-model comparison** of GPT-3.5-turbo vs GPT-5.2 using the same attacker, same objectives, and same Claude Opus 4.6 judge with a 5-point compliance rubric, producing guardrail degradation curves that show how defense strength evolves over adversarial rounds
 
 ---
 
@@ -106,7 +106,7 @@ The same attacker, running the same objectives with the same judge, **could not 
 | Training Data | 10,724 train / 1,192 val (ShareGPT format) |
 | Fine-tuning | 3 epochs, 4,023 steps, 10.3 hours on A100 80GB |
 | Inference | 2x A100 80GB, BitsAndBytes 4-bit, Flask OpenAI-compatible API |
-| Judge | Claude Opus 4.5 via Anthropic API, structured JSON output |
+| Judge | Claude Opus 4.6 via Anthropic API, structured JSON output |
 | Victim Models | GPT-3.5-turbo, GPT-5.2 (via OpenAI API) |
 | Orchestration | Microsoft PyRIT + custom logging harness |
 
