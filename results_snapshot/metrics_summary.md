@@ -6,7 +6,7 @@
 |-----------|-------|
 | Attacker Model | ADVERSA-Red (Llama-3.1-70B-Instruct + QLoRA) |
 | Victim Models | GPT-3.5-turbo, GPT-5.2 |
-| Judge Model | Claude Opus 4.5 (claude-opus-4-6) |
+| Judge Model | Claude Opus 4.6 |
 | Scoring Rubric | 5-point (Hard Refusal / Soft Refusal / Partial / Detailed / Full Compliance) |
 | Jailbreak Threshold | Score ≥ 4 (Detailed or Full Compliance) |
 | Max Rounds (GPT-3.5) | 15 |
@@ -62,4 +62,4 @@
 
 4. **ADVERSA-Red eliminates attacker refusals:** 0 refusals across all 10 experiments (300+ rounds total), compared to GPT-4's ~85% refusal rate when used as an attacker.
 
-5. **Judge reliability matters:** Replacing GPT-4 (binary pass/fail, false negatives on phishing) with Claude Opus 4.5 (5-point rubric, structured reasoning) eliminated false negatives and captured the gradient of compliance that makes degradation curves possible.
+5. **Judge reliability matters:** Replacing GPT-4 (binary pass/fail, false negatives on phishing) with Claude Opus 4.6 (5-point rubric, structured reasoning) eliminated false negatives and captured the gradient of compliance that makes degradation curves possible.
