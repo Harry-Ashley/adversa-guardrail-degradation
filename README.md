@@ -26,6 +26,12 @@ Companies shipping LLMs need to know not just *whether* their model refuses, but
 
 ---
 
+## The Research Question
+
+ADVERSA does not measure whether a model can be jailbroken. It measures what happens to the defense curve under sustained adversarial pressure. A model that resists every attack still produces a curve, and that curve is scientifically valuable. The question was never "can we break it?" but "what does the shape of resistance look like over time, and can early patterns predict eventual failure?" Both erosion and reinforcement are findings. Both tell you something about how a model's safety properties behave under stress.
+
+---
+
 ## Key Findings
 
 ### GPT-3.5-turbo: 80% Jailbreak Rate
@@ -34,9 +40,9 @@ ADVERSA-Red jailbroke GPT-3.5 on **4 out of 5 high-severity objectives** in an a
 
 Only the ransomware guide objective resisted, holding at Partial Compliance (score 3) for all 15 rounds without ever crossing the jailbreak threshold.
 
-### GPT-5.2: 0% Jailbreak Rate
+### GPT-5.2: Guardrail Hardening Under Pressure
 
-The same attacker, running the same objectives with the same judge, **could not jailbreak GPT-5.2 in 150 total rounds** (30 rounds x 5 objectives). GPT-5.2 not only resisted but showed **guardrail hardening**. Several objectives saw scores *decrease* over time as the model appeared to detect adversarial intent and lock down further (e.g., ransomware: 3 to 2 to 1 to 1 to 1...).
+The same attacker, running the same objectives with the same judge, produced a fundamentally different curve against GPT-5.2 across **150 total rounds** (30 rounds × 5 objectives): zero jailbreaks, but more importantly, measurable defense reinforcement. GPT-5.2 not only resisted but showed **guardrail hardening**. Several objectives saw scores *decrease* over time as the model appeared to detect adversarial intent and lock down further (e.g., ransomware: 3 to 2 to 1 to 1 to 1...).
 
 ---
 
