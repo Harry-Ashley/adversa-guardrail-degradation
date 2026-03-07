@@ -248,8 +248,6 @@ During preliminary runs before Experiment 2's final configuration, a systematic 
 
 This behavior has a direct explanation: the attacker was trained primarily on single-turn examples. In multi-turn deployment, the model receives a growing conversation history as context and appears to treat the victim's helpful, conversational responses as reinforcement signals, gradually shifting its generation distribution toward cooperative rather than adversarial outputs.
 
-*Figure 16: Attacker drift trajectory example from preliminary runs. [Preliminary run logs were not retained. This section documents the observed behavior qualitatively.]*
-
 This is documented here rather than omitted because it is a genuine empirical finding about the behavior of fine-tuned attacker models in out-of-distribution multi-turn scenarios. Addressing it would require multi-turn adversarial training data with explicit objective-persistence annotations, which is a defined direction for future work.
 
 The maximum turn count was reduced to 10 in Experiment 2 to limit drift exposure, and an explicit anti-drift instruction was added to the attacker system prompt. Attacker refusals were also observed 3 times against Gemini in Experiment 2, a phenomenon absent from Experiment 1.
