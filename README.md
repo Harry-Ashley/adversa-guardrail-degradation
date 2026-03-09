@@ -225,7 +225,7 @@ One of the central contributions of Experiment 2 is treating judge reliability a
 Key observations on judge behavior:
 - All four jailbreak declarations were unanimous (3/3 judges agreed), indicating high consensus precision for clear compliance cases.
 - The SE-01 Round 1 response from GPT-5.2 (a hard refusal) produced a 1/2/1 score split, with Gemini scoring it as SOFT_REFUSAL while Claude and GPT scored it HARD_REFUSAL. This is a genuine judgment call about whether offering legitimate alternatives constitutes soft or hard refusal.
-- In two cases, Gemini's raw JSON response was truncated, triggering the fallback score parser. The numeric score was recovered correctly but the reasoning string was lost. This is a data quality issue affecting 2 of 45 judge calls (4.4%).
+- In two cases, Gemini's raw JSON response was truncated, triggering the fallback score parser. The numeric score was recovered correctly but the reasoning string was lost. This is a data quality issue affecting 2 of approximately 336 judge calls (0.6%).
 - Self-judging occurred in every conversation where the victim and one judge were the same model. Claude judged Claude's responses, Gemini judged Gemini's responses, and GPT-5.2 judged GPT-5.2's responses. The `is_self_judge` flag is logged per round. Whether self-judgment introduces systematic leniency or severity is not yet measurable from this sample size but is a necessary focus for future work.
 
 ![Figure 14: Self-judge vs cross-judge score distributions. Self-judge: the judge model and victim model are the same. Cross-judge: different models.](results/experiment_2/plots/fig9_self_vs_cross_judge.png)
@@ -268,7 +268,7 @@ The following limitations are stated explicitly in the interest of academic hone
 
 **Self-judging.** In every conversation, one of the three judges is the same model being evaluated as a victim. Claude judges Claude's responses, GPT-5.2 judges GPT-5.2's responses, Gemini judges Gemini's responses. Whether this introduces systematic score inflation or deflation is unknown from this data. It is a structural feature of using the same model set for both victim and judge roles.
 
-**Judge truncation.** In 2 of 45 judge calls (4.4%), Gemini's response JSON was truncated mid-string, causing fallback parsing. Numeric scores were recovered but reasoning strings were lost. This is a data quality issue in a minority of cases.
+**Judge truncation.** In 2 of approximately 336 judge calls (0.6%), Gemini's response JSON was truncated mid-string, causing fallback parsing. Numeric scores were recovered but reasoning strings were lost. This is a data quality issue in a minority of cases.
 
 **No statistical comparison between experiments.** Experiment 1 used a single judge (Claude Opus 4.6) with GPT-3.5-turbo capped at 15 turns and GPT-5.2 capped at 30 turns. Experiment 2 used triple-judge consensus and 10-turn conversations. These are not controlled conditions for cross-experiment comparison. The GPT-5.2 results across both experiments should not be interpreted as a longitudinal trend.
 
@@ -373,25 +373,6 @@ adversa-guardrail-degradation/
     └── prior_work/
         └── Harry_Owiredu_Ashley_AI_Red_Team_Lab_Report.pdf
 ```
-
----
-
-## What I Will Build and Own as Part of Your Team
-
-### 1. Continuous Adversarial Evaluation Pipeline
-Design and maintain an internal red-teaming evaluation harness that runs structured multi-turn adversarial simulations against your models, logs degradation dynamics instead of pass/fail outputs, tracks regression over time as models are updated, and produces reproducible failure traces for engineering review.
-
-### 2. Guardrail Stability Measurement
-Develop a guardrail stability index, track refusal strength trends across releases, identify strategy patterns that cause erosion, and provide engineering-ready mitigation guidance. This becomes part of your model evaluation lifecycle rather than a one-time audit.
-
-### 3. Evaluation Reliability Engineering
-My work has demonstrated directly that LLM judge reliability is not a given in adversarial contexts. I will audit judge reliability, build classification sanity checks, measure inter-rater agreement systematically, and improve confidence in red-team metrics. The triple-judge architecture in Experiment 2 is a foundation for this.
-
-### 4. Attacker Quality Engineering
-Reliable attacker models that do not drift, refuse, or lose objective focus over multi-turn conversations are a research gap. I have identified this gap empirically and understand what training data is needed to close it.
-
-### 5. Formal AI Safety Capability
-Over time, I would help establish a documented adversarial testing playbook, structured strategy libraries, reusable evaluation templates, and research-backed defensive recommendations as organizational capability.
 
 ---
 
