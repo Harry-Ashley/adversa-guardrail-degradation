@@ -382,8 +382,7 @@ If you use this work, please cite:
 
 Harry Owiredu-Ashley (2026).  
 ADVERSA: Measuring Multi-Turn Guardrail Degradation and Judge Reliability in Large Language Models.  
-DOI: https://doi.org/10.5281/zenodo.18917553
-
+DOI: https://doi.org/10.5281/zenodo.18927906
 ---
 
 ## Contact
