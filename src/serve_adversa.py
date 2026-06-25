@@ -1,4 +1,7 @@
 import sys
+# Block TensorFlow imports: transformers will optionally import TF if it is
+# installed, which is slow and can grab GPU memory we need for the 70B model.
+# Setting these to None forces the PyTorch-only code paths.
 sys.modules['tensorflow'] = None
 sys.modules['tensorflow_text'] = None
 sys.modules['tf'] = None

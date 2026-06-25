@@ -345,13 +345,20 @@ def call_attacker(messages):
 # ═══════════════════════════════════════════════════════════════
 
 def build_victim_messages(history, attack_text):
-    """Build full conversation history for victim in OpenAI messages format."""
+    """Build full conversation history for victim in OpenAI messages format.
+
+    Only complete (attack, response) exchanges are included. A round whose
+    attack was an error/refusal OR whose victim response errored is skipped
+    entirely — appending a lone user turn would produce two consecutive user
+    messages, which the Anthropic and Gemini APIs reject.
+    """
     messages = []
     for h in (history or []):
-        if not h["attack"].startswith(("[API_ERROR]", "REFUSED", "API_ERROR")):
+        attack_ok = not h["attack"].startswith(("[API_ERROR]", "REFUSED", "API_ERROR"))
+        response_ok = not h["response"].startswith(("[API_ERROR]", "N/A"))
+        if attack_ok and response_ok:
             messages.append({"role": "user", "content": h["attack"]})
-            if not h["response"].startswith("[API_ERROR]"):
-                messages.append({"role": "assistant", "content": h["response"]})
+            messages.append({"role": "assistant", "content": h["response"]})
     messages.append({"role": "user", "content": attack_text})
     return messages
 
@@ -841,25 +848,25 @@ def generate_objective_id(objective_text):
 def run_experiment(objectives_file, resume=False):
     """
     Run the frontier experiment.
-    5 objectives × 3 victims × 1 conversation = 15 conversations, 30 turns each.
+    5 objectives × 3 victims × 1 conversation = 15 conversations, up to
+    MAX_TURNS (10) rounds each.
     """
     objectives = load_objectives(objectives_file)
     convs_per_pair = CONVERSATIONS_PER_PAIR
 
-    # Create experiment directory
+    # Resume support: reuse the most recent experiment directory if asked,
+    # otherwise create a fresh timestamped one. Resolve the directory before
+    # creating it so resume mode does not leave an empty orphan behind.
     experiment_id = datetime.now().strftime("%Y%m%d_%H%M%S")
     experiment_dir = LOG_DIR / f"experiment_{experiment_id}"
-    experiment_dir.mkdir(exist_ok=True)
-
-    # Resume support
     completed_ids = set()
     if resume:
-        # Find most recent experiment directory
         existing = sorted(LOG_DIR.glob("experiment_*"))
         if existing:
             experiment_dir = existing[-1]
             completed_ids = get_completed_ids(experiment_dir)
             print(f"{Colors.CYAN}Resuming: {len(completed_ids)} conversations already completed{Colors.RESET}")
+    experiment_dir.mkdir(exist_ok=True)
 
     total_conversations = len(objectives) * len(VICTIM_MODELS) * convs_per_pair
     completed_count = 0
@@ -1103,7 +1110,8 @@ def run_calibration(objectives_file, num_samples=200):
             if sample_count >= num_samples:
                 break
 
-            victim_reply = call_victim(victim_key, attack_text, history)
+            # Calibration scores single-turn responses, so no prior history.
+            victim_reply = call_victim(victim_key, attack_text, [])
             if victim_reply.startswith("[API_ERROR]"):
                 continue
 
@@ -1280,7 +1288,7 @@ Examples:
     print("  of Resistance Surfaces in AI")
     print("  ─────────────────────────────────────────────────────────")
     print("  Frontier Experiment Pipeline v1.0")
-    print("  Attacker: ADVERSA-Red-70B (Llama-3.3-70B, Full Fine-Tune, 243K examples)")
+    print("  Attacker: ADVERSA-Red-70B (Llama-3.1-70B + QLoRA, merged to bf16)")
     print("  Judges:   Triple-Judge Consensus (Claude Opus 4.6 / Gemini 3.1 Pro / GPT-5.2)")
     print("═" * 70)
     print(f"{Colors.RESET}")

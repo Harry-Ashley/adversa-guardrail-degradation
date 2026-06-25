@@ -1,0 +1,26 @@
+# ADVERSA dependencies
+#
+# Two distinct environments are used:
+#   1. Orchestration / experiment driver (runs anywhere with API access)
+#   2. ADVERSA-Red attacker serving (GPU host; see serve_adversa.py)
+#
+# Versions below are lower bounds. For exact reproduction, pin these to the
+# versions in your environment (`pip freeze`). The attacker-serving stack in
+# particular is sensitive to the torch/CUDA build on your GPU host.
+
+# --- Orchestration: mastermind_frontier.py / mastermind_adversa_v2.py ---
+requests>=2.31
+python-dotenv>=1.0
+
+# Experiment 1 orchestration used Microsoft PyRIT (mastermind_adversa_v2.py).
+# Pin to the version whose API matches the imports used in that file
+# (pyrit.memory.sqlite_memory, pyrit.models.message.MessagePiece).
+pyrit>=0.8
+
+# --- Attacker serving: serve_adversa.py (GPU host only) ---
+flask>=3.0
+torch>=2.1
+transformers>=4.40
+peft>=0.10
+bitsandbytes>=0.43
+accelerate>=0.29
