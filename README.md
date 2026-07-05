@@ -6,6 +6,7 @@
 
 *I am seeking a long-term AI Security or AI Safety Engineering role where I can design and maintain adversarial evaluation systems that improve model robustness over time.*
 
+**Published: Best Paper Award, 24th IEEE/ACIS International Conference on Software Engineering Research, Management and Applications (SERA 2026).**
 ---
 
 ## What This Project Is and Is Not
