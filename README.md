@@ -4,7 +4,6 @@
 
 **ADVERSA is an automated red-teaming framework that systematically measures how LLM safety guardrails behave under multi-turn adversarial pressure, quantifies degradation dynamics and reinforcement hardening, and evaluates the reliability of LLM-based judges used to score compliance.**
 
-*I am seeking a long-term AI Security or AI Safety Engineering role where I can design and maintain adversarial evaluation systems that improve model robustness over time.*
 
 **Published: Best Paper Award, 24th IEEE/ACIS International Conference on Software Engineering Research, Management and Applications (SERA 2026).**
 ---
